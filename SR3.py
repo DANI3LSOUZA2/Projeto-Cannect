@@ -46,8 +46,6 @@ def mostrar_perfil():
 def atrib_pont_XP_penalidade():
     cp = -50
     registros[ID][2] = registros[ID][2] + cp
-    xp = -50
-    registros[ID][4] = registros[ID][4] + xp
 
 
 def atrib_pont_XP_devolucao():
