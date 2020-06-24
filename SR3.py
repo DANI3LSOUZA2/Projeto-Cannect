@@ -55,8 +55,8 @@ while opcao != -1:
                             num_caneca = input("\nDigite a numeração da caneca: ")
                             caneca = find_file('mug_num', num_caneca, 'canecas.txt')
 
-                            disp_antigo = caneca['disp']
-                            caneca_usuario_antiga = usuario['caneca']
+                            caneca_atual = num_caneca
+                            usuario_atual = usuario['id']
 
                             if caneca is None:
                                 print(" ** Caneca não foi encontrada **")
@@ -120,8 +120,9 @@ while opcao != -1:
                         print("** Você já está com a caneca {} ** ".format(usuario['caneca']))
                         print("Para pegar outra você deve devolver-la\n")
 
-                    edit_file('disp', disp_antigo, caneca, 'canecas.txt')
-                    edit_file('caneca', caneca_usuario_antiga, usuario, 'usuarios.txt')
+                    edit_file('mug_num', caneca_atual, caneca, 'canecas.txt')
+                    edit_file('id', usuario_atual, usuario, 'usuarios.txt')
+
 
                 if opcao_login == 2:
                     print("DEVOLVER CANECA")
@@ -129,12 +130,9 @@ while opcao != -1:
 
                     decisao_limpeza = input("Você lavou a caneca {} (Digite s ou n) ? ".format(usuario['caneca']))
 
-                    caneca_atual = usuario['caneca']
-                    caneca_disp_atual = caneca['disp']
-                    usuario_pont_atual = usuario['pontuacao']
-                    usuario_exp_atual = usuario['exp']
-                    caneca_status_atual = caneca['mug_state']
 
+                    usuario_atual = usuario['id']
+                    caneca_atual = usuario['caneca']
 
                     if decisao_limpeza == 's':
 
@@ -166,11 +164,9 @@ while opcao != -1:
                             usuario['exp'] = XP_acumulativo
                             caneca['mug_state'] = "Dirty"
 
-                    edit_file('caneca', caneca_atual, usuario, 'usuarios.txt')
-                    edit_file('disp', caneca_disp_atual, caneca, 'canecas.txt')
-                    edit_file('pontuacao', usuario_pont_atual, usuario, 'usuarios.txt')
-                    edit_file('exp', usuario_exp_atual, usuario, 'usuarios.txt')
-                    edit_file('mug_state', caneca_status_atual, caneca, 'canecas.txt')
+                    edit_file('id', usuario_atual, usuario, 'usuarios.txt')
+                    edit_file('mug_num', caneca_atual, caneca, 'canecas.txt')
+
 
                 opcao_report = 0
                 if opcao_login == 3:
@@ -186,13 +182,15 @@ while opcao != -1:
                             num_caneca = input("Digite a numeração da caneca que deseja reportar: ")
 
                             caneca = find_file('mug_num', num_caneca, 'canecas.txt')
+
                             if caneca is None:
                                 print("** Caneca não encontrada **")
 
                             else:
-                                caneca_status_atual = caneca['mug_state']
-                                usuario_pont_atual = usuario['pontuacao']
-                                usuario_exp_atual = usuario['exp']
+
+
+                                caneca_antiga = caneca['mug_num']
+                                usuario_atual = usuario['id']
 
                                 if opcao_report == 1:
                                     print("O CANNECT agradece o seu report :D")
@@ -227,9 +225,8 @@ while opcao != -1:
                                     usuario['pontuacao'] = ponto_acumulativo
                                     usuario['exp'] = XP_acumulativo
 
-                                edit_file('mug_state', caneca_status_atual, caneca, 'canecas.txt')
-                                edit_file('pontuacao', usuario_pont_atual, usuario, 'usuarios.txt')
-                                edit_file('exp', usuario_exp_atual, usuario, 'usuarios.txt')
+                                edit_file('id', usuario_atual, usuario, 'usuarios.txt')
+                                edit_file('mug_num', caneca_antiga, caneca, 'canecas.txt')
 
                 if opcao_login == 4:
                     print("Seu perfil")
@@ -292,7 +289,7 @@ while opcao != -1:
 
         nome = input("Digite seu nome: ")
 
-        time = int(input("Qual seu time ?(Digite 1 para a Gato ou 2 para Cachorro: "))
+        time = input("Qual seu time ?(Digite 1 para a Gato ou 2 para Cachorro: ")
 
         validacao_nome = nome.isalpha()
         pontuacao = 0
@@ -315,7 +312,7 @@ while opcao != -1:
             nome = input("Digite seu nome: ")
             validacao_nome = nome.isalpha()
 
-        while time != 1 and time != 2:
+        while time != '1' and time != '2':
             print("DIGITE UM TIME VÁLIDO, TENTE NOVAMENTE")
             time = input("Qual seu time ? (1 para Gato ou 2 para Cachorro): ")
 
