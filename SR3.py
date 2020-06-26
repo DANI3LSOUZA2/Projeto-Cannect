@@ -1,7 +1,17 @@
 from simplejson_functions import *
 
-registros = {}
-score_board = {}
+
+def cont_descartaveis():
+    descartavel = find_file('id', 1, 'descartaveis.txt')
+
+    descartavel_atual = descartavel['descartavel']
+
+    i = descartavel['descartavel'] + 1
+    descartavel['descartavel'] = i
+    edit_file('descartavel', descartavel_atual, descartavel, 'descartaveis.txt')
+
+
+
 opcao_info = 0
 opcao = 0
 
@@ -16,8 +26,7 @@ while opcao != -1:
     print("2 - Informações")
     print("3 - Registrar Usuário")
     print("-1 - Para finalizar o programa\n")
-    # Para teste : 4 - CONSULTAR DICIONARIO
-    # '''  ''''' : 5 - ADICIONAR CANECAS
+
 
     opcao = int(input("Escolhe uma das opções acima: "))
 
@@ -45,11 +54,14 @@ while opcao != -1:
                 print("2 - Devolver caneca")
                 print("3 - Report")
                 print("4 - Meu perfil")
-                print("5 - Placar dos times\n")
+                print("5 - Placar dos times")
+                print("6 - Ver descartáveis não utilizados")
+                print("7 - Leaderboards")
                 print("0 - Descannectar")
                 opcao_login = int(input("Escolha uma das opções acima: "))
 
                 if opcao_login == 1:
+                    cont_descartaveis()
                     if usuario['caneca'] is None:
                         while True:
                             num_caneca = input("\nDigite a numeração da caneca: ")
@@ -248,8 +260,53 @@ while opcao != -1:
                         caneca = usuario['caneca']
 
                     print("Caneca atual: {}".format(caneca))
+
                     print("Level: {}")  # level inteiro
 
+                if opcao_login == 5:
+
+                    times = show_file('times.txt')
+
+                    for time in times:
+                        time_atual = time['nome_time']
+                        print("{}: {}".format(time_atual, time['pontuacao']))
+
+                if opcao_login == 6:
+                    descartavel = find_file('id', 1, 'descartaveis.txt')
+                    total_descartavel = descartavel['descartavel']
+
+                    print("\n** Total de descartáveis não utilizados: {} **\n".format(total_descartavel))
+
+                if opcao_login == 7:
+                    while True:
+                        print("1 - LeaderBoard de Level")
+                        print("2 - LeaderBoard de Pontos")
+                        print("0 - Voltar")
+                        escolha = int(input("Escolha qual LeaderBoard deseja visualizar: "))
+                        if escolha == 1:
+                            print("LEADERBOARD LEVEL")
+                            continue
+                        if escolha == 2:
+                            print("LEADERBOARD DE PONTUAÇÃO")
+                            unsorted_list = show_file('usuarios.txt')
+
+                            sorted_list = sorted(unsorted_list, key=lambda k: k['pontuacao'], reverse=True)
+
+                            i = 1
+                            print("-" * 30)
+                            print("**(TOP 10)**\n")
+                            for pontuacao in sorted_list:
+
+                                print("{}. {} / CP: {}".format(i, pontuacao['nome'], pontuacao['pontuacao']))
+                                i += 1
+                                if i == 11:
+                                    break
+
+                            print("-"*30)
+                            print("\n")
+
+                        else:
+                            break
 
     if opcao == 2:
 
