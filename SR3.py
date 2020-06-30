@@ -35,8 +35,7 @@ while opcao != -1:
         login_usuário = input("Digite seu ID ou email: ")
 
         usuario = find_file('id', login_usuário, 'usuarios.txt')
-        caneca_atual = usuario['caneca']
-        caneca = find_file('mug_num', caneca_atual, 'canecas.txt')
+
 
 
         if usuario is None:
@@ -44,6 +43,8 @@ while opcao != -1:
             print('Faça o cadastro se ainda não estiver cadastrado\n')
 
         else:
+            caneca_atual = usuario['caneca']
+            caneca = find_file('mug_num', caneca_atual, 'canecas.txt')
             print(" ** Bem-vindo ao Cannect, {} !! ** ".format(usuario['nome']))
 
             # First Page
